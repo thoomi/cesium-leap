@@ -1,11 +1,11 @@
 {
-    "baseUrl": "../lib",
-    "paths": {
-        "principium": "../principium"
+    "baseUrl": "../",
+    "paths" :{
+    	"Leap" : "node_modules/leapjs/leap"
     },
-    "include": ["../tools/almond", "principium"],
-    "exclude": ["jquery", "underscore"],
-    "out": "../dist/principium.js",
+    "include": ["tools/almond", "CesiumLeap"],
+    "exclude": ["Leap"],
+    "out": "../dist/cesiumLeap.js",
     "wrap": {
         "startFile": "wrap.start",
         "endFile": "wrap.end"

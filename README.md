@@ -1,76 +1,56 @@
-# example-libglobal
+# CesiumLeap
 
-This is an example of building a JavaScript library with AMD modules and using
-requirejs while in dev, but then building a file for distribution that does
-not require an AMD loader. The built file will work either with browser globals
-or with an AMD loader.
+A library that allows Leap Motion navigation for Cesium.
 
-The library also depends on two other libraries:
+The library depends on the Leap Motion library. 
 
-* jQuery, which registers as an AMD library.
-* underscore, which does not register as an AMD library. So the
-[requirejs shim config](http://requirejs.org/docs/api.html#config-shim) is used
-when loading underscore in an AMD setting.
+# Installation
 
-When the library is built, it **excludes** jQuery and underscore from the
-built library. Consumers of the built library will  provide a jQuery and
-underscore for the library. If the consumer uses an AMD loader, then the built
-file will ask for 'jquery' and 'underscore' as AMD dependencies. If the consumer
-just uses browser globals and script tags, the library will grab the `$` and
-`_` global variables and use them for the jQuery and underscore dependencies.
+`
+bower install cesium-leap
+`
 
-The built library also does not include require.js in the file, but instead
-uses [almond](https://github.com/jrburke/almond), a small AMD API
-implementation, that allows the built file's internal modules to work. These
-internal modules and this version of almond are not visible outside the built
-file, just used internally by the built file for code organization and
-referencing.
+Then include the library in your source.  
+`<script src="path-to-cesium-leap/dist/cesiumLeap.js"></script>`
 
-## File structure
+The library is also AMD compatible, just make sure you configure Leap as a module as well.  At the time of this writing, Leap needed an export shim to work properly with requirejs.  
 
-This project creates a library called **principium.js**. This is just a made
-up name that hopefully is easy to search and replace if you use this as a
-template to create your own library.
 
-* **dist/principium.js**: the built library suitable for distribution.
-* **lib**: contains lib scripts used during dev and testing.
-* **tests**: the QUnit-based tests.
-* **tools**: the helper tools/scripts used to build the output file.
-* **principium**: holds the sub-modules used by the main `principium.js` module
-to help implement the library's functionality.
-* **principium.js**: the main module entry point for the source-form of the
-library.
+	require.config({
+	    baseUrl: '.',
+	    "paths" :{
+	        "CesiumLeap" : "path-to-cesium-leap/CesiumLeap",            
+	        "Leap" : "path-to-leapjs/leap"
+	    },
+	    shim :  {
+	        Leap : {exports : 'Leap'}
+	    }
+	});
 
-## How to do development
+# Usage:
+The library needs the Ellipsoid and the Scene to do its work, pass these in as options:
 
-* Modify `principium.js` and its submodules in the `principium` directory.
-* Create tests for the functionality in the `tests` directory.
-* Load `tests/index.html` to run the tests.
+	var cesiumLeap = new CesiumLeap({
+		scene : myScene,
+		ellipsoid : myEllipsoid
+	});
 
-## How to build the library
+That's basically it, it will automatically register with the Leap motion when it can and allow you to fly around.  
 
-The r.js optimizer can be run in Node or Rhino. See the
-[r.js README](https://github.com/jrburke/r.js) for instructions on how to run
-the optimizer in Rhino. For running in Node, run this command in the
-same directory as this README:
+#Flying directions:
 
-    node tools/r.js -o tools/build.js
+* CesiumLeap works only with one hand.
+* There's a built-in delay to allow you to get your hand in a neutral position.  
+* If at anytime you want to stop, just make your hand into a fist.
+* Moving your hand left or right will move the camera left or right
+* Moving your hand forward or backward will move the camera forward and backward.  Note, this means you may be moving *down* in altitude if you are looking at the earth.
+* Tilting your hand up and down will have the camera look up and down.
+* If you rotate your hand left or right, the camera will rotate that direction.  Try to think of your hand is an airplane, that helps me.
+* You can also twist your hand at the wrist and it will "twist" the camera.  If you want to fly around something, it often helps to rotate and twist at the same time, I find the airplane analogy helpful here as well.  
 
-This will generate the built file in `dist/principium.js`.
+# Contributing
+Contributions welcome.  Use Pull Requests.  Would love to add gestures and an actual API for leap events.  
 
-**Test** the built file by running these files:
+# License
+MIT Style license
 
-* **tests/index-dist-amd.html**: For testing the dist version of the library
-with an AMD loader.
-* **tests/index-dist-global.html**: For testing the dist version of the library
-in a "browser globals and script tags" environment.
-
-## What to tell developers of your built library
-
-You can tell them this library can be used with other AMD modules, or it can be
-used in a project that uses browser globals and HTML script tags.
-
-If the library depends on scripts that are not AMD modules (like this example,
-which uses underscore), then you may need to inform developers who use your
-libary what shim config you used if they want to use this library in an AMD
-project.
