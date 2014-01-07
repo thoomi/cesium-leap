@@ -2,14 +2,14 @@
   "name": "cesium-leap",
   "author": "Aviture <michael.macaulay@aviture.us.com>",
   "description": "LEAP Motion plugin for Cesium for basic navigation",
-  "version" : "0.0.1",  
+  "version" : "0.0.2",  
   
   "repository": {
         "type": "git",
         "url": "https://github.com/mmacaula/cesium-leap.git"
     },
   "dependencies": {
-    "leapjs": "~0.3.0-beta1"
+    "leapjs": "0.2.2"
   }
   
 }
