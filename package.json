@@ -2,7 +2,7 @@
   "name": "cesium-leap",
   "author": "Aviture <michael.macaulay@aviture.us.com>",
   "description": "LEAP Motion plugin for Cesium for basic navigation",
-  "version" : "0.0.2",  
+  "version" : "0.0.4",  
   
   "repository": {
         "type": "git",
