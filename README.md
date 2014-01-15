@@ -2,7 +2,7 @@
 
 A library that allows Leap Motion navigation for Cesium.
 
-The library depends on the Leap Motion javascript library, a Leap Motion Controller (duh) and has been tested with Cesium version b23, but should work with b24, the latest at the time of writing.  You will need to install the Leap Motion software that comes with the device. 
+The library depends on the Leap Motion javascript library, a Leap Motion Controller (duh) and has been tested with Cesium version b24, the latest at the time of writing.  You will need to install the Leap Motion software that comes with the device. 
 
 # Installation
 
@@ -47,6 +47,10 @@ That's basically it, it will automatically register with the Leap motion when it
 * Tilting your hand up and down will have the camera look up and down.
 * If you rotate your hand left or right, the camera will rotate that direction.  Try to think of your hand is an airplane, that helps me.
 * You can also twist your hand at the wrist and it will "twist" the camera.  If you want to fly around something, it often helps to rotate and twist at the same time, I find the airplane analogy helpful here as well.  
+
+# Known issues:
+*  Plugin does not work well in 2D mode.
+*  Plugin will work in 2.5D mode (Columbus), but as you zoom closer to ground, fails to slow down appropriately, making it a bit unwieldy. 
 
 # Contributing
 Contributions welcome.  Use Pull Requests.  Would love to add gestures and an actual API for leap events.  
