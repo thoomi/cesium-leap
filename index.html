@@ -8,7 +8,8 @@
   <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <title>Hello World!</title>
-  <script src="cesium/Cesium/Cesium.js"></script>
+  <script type="text/javascript" src="cesium/Cesium/Cesium.js"></script>
+  <script type="text/javascript" src="lib/require.js"></script>
   <style>
       @import url(cesium/Cesium/Widgets/widgets.css);
 
@@ -34,7 +35,29 @@
 <body>
   <div id="cesiumContainer"></div>
   <script>
-    var widget = new Cesium.CesiumWidget('cesiumContainer');
+    require.config({
+      baseUrl: '.',
+      "paths" :{
+          "CesiumLeap" : "CesiumLeap",            
+          "Leap" : "node_modules/leapjs/leap-0.5.0"
+      },
+      shim :  {
+          Leap : {exports : 'Leap'}
+      }
+    });
+
+
+    require(["CesiumLeap"], function(CesiumLeap) {
+
+      var widget = new Cesium.CesiumWidget('cesiumContainer');
+
+
+      var cesiumLeap = new CesiumLeap({
+          scene : widget.scene,
+          ellipsoid : widget.scene.globe
+      });
+
+    });
   </script>
 </body>
 </html>
