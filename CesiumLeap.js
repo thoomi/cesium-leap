@@ -20,7 +20,6 @@ define(function (require) {
 			cesiumLeap.onFrame(data);
 		});
 		this.leapController.connect();
-
 	};
 
 	CesiumLeap.prototype.onConnect = function(){
@@ -35,8 +34,7 @@ define(function (require) {
 		        data = data.hands[0];
 		        if (data.timeVisible > 0.75) {
 		            var cesiumLeap = this,
-		                camera = cesiumLeap.scene.getCamera(),
-		                cameraController = camera.controller,
+		                camera = cesiumLeap.scene.camera,
 		                movement = {},
 		                cameraHeight = cesiumLeap.ellipsoid.cartesianToCartographic(camera.position).height,
 		                moveRate = cameraHeight / 100.0;
@@ -64,14 +62,14 @@ define(function (require) {
 		            var mid = 175;
 		            var normalized = (movement.z - mid) / -100;
 
-		            cameraController.moveForward(normalized * moveRate);
-		            cameraController.moveRight(movement.x * moveRate / 100);
-		            cameraController.moveDown(movement.y * moveRate / 100);
+		            camera.moveForward(normalized * moveRate);
+		            camera.moveRight(movement.x * moveRate / 100);
+		            camera.moveDown(movement.y * moveRate / 100);
 
-		            cameraController.lookUp(movement.pitch / 100);
+		            camera.lookUp(movement.pitch / 100);
 
-		            cameraController.twistRight(movement.yaw / 100);
-		            cameraController.lookRight(movement.rotate / 100);
+		            camera.twistRight(movement.yaw / 100);
+		            camera.lookRight(movement.rotate / 100);
 		        }
 		    }
 		}
