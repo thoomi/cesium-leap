@@ -2,7 +2,7 @@
 
 A library that allows Leap Motion navigation for Cesium.
 
-The library depends on the Leap Motion javascript library, a Leap Motion Controller (duh) and has been tested with Cesium version b24, the latest at the time of writing.  You will need to install the Leap Motion software that comes with the device. 
+The library depends on the Leap Motion javascript library, a Leap Motion Controller (duh) and has been tested with Cesium version b28, the latest at the time of writing.  You will need to install the Leap Motion software that comes with the device. 
 
 # Installation
 
